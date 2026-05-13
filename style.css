@@ -1,0 +1,21 @@
+body{
+    background-color: azure;
+}
+
+.posts-scroll{
+    background-color: darkgray;
+    border: 5%;
+    padding-left: 80px;
+    padding-right: 80px;
+    width: 65%;
+    margin:auto;
+    box-sizing:border-box;
+    height: 640px;
+    overflow-x: auto;
+}
+
+.post-creation{
+    height: 300px;
+    width: 100%;
+    position: relative;
+}
