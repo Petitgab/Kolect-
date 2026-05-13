@@ -1,4 +1,4 @@
-import API_BASE_URL from "../env.js";
+import { config } from "../../env.js";
 
 export type Message = {
     id: number;
@@ -8,7 +8,7 @@ export type Message = {
 };
 
 async function getMessages(): Promise<Message[]> {
-    const response = await fetch(API_BASE_URL + "/messages?nb_messages=20&page=1");
+    const response = await fetch(config.API_URL + "messages?nb_messages=20&page=1");
     const result = await response.json();
 
     return result.data;
