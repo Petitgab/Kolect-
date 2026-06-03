@@ -1,7 +1,7 @@
-import API_BASE_URL from "../env.js";
+import {config} from "../env.js";
 
 async function likePost(messageId: number): Promise<void> {
-    await fetch(API_BASE_URL + "/message/like", {
+    await fetch(config.API_URL + "message/like", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"

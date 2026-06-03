@@ -1,7 +1,7 @@
-import API_BASE_URL from "../env.js";
+import { config } from "../env.js";
 
 async function createPost(username: string, content: string): Promise<void> {
-    await fetch(API_BASE_URL + "/message", {
+    await fetch(config.API_URL + "message", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"

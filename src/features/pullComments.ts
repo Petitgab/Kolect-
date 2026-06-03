@@ -1,4 +1,4 @@
-import API_BASE_URL from "../env.js";
+import {config} from "../env.js";
 
 export type Comment = {
     id: number;
@@ -9,7 +9,7 @@ export type Comment = {
 
 async function getComments(messageId: number): Promise<Comment[]> {
     const response = await fetch(
-        API_BASE_URL + "/comments?message_id=" + messageId + "&nb_comments=5&page=1"
+        config.API_URL + "comments?message_id=" + messageId + "&nb_comments=5&page=1"
     );
 
     const result = await response.json();

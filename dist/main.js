@@ -2,6 +2,7 @@ import { createPost } from "./features/createPost.js";
 import { loadMorePosts, resetPosts } from "./features/postScroll.js";
 import { getComments } from "./features/pullComments.js";
 import { likePost } from "./features/pullLikes.js";
+import { dislikepost } from "./features/pullDislikes.js";
 const connectedUser = document.getElementById("connected-user");
 const contentInput = document.getElementById("content");
 const sendButton = document.getElementById("send-button");
@@ -24,6 +25,12 @@ function getLikedPosts() {
 function saveLikedPost(messageId) {
     const likedPosts = getLikedPosts();
     likedPosts.push(messageId);
+    localStorage.setItem("likedPosts", JSON.stringify(likedPosts));
+}
+function deletesavedlike(messageId) {
+    const likedPosts = getLikedPosts();
+    let remover = likedPosts.indexOf(messageId);
+    likedPosts.splice(remover, 1);
     localStorage.setItem("likedPosts", JSON.stringify(likedPosts));
 }
 function hasAlreadyLiked(messageId) {
@@ -61,20 +68,35 @@ function showMessages(messages) {
         const likes = document.createElement("small");
         likes.textContent = "Likes : " + message.like;
         const likeButton = document.createElement("button");
+        const dislikebutton = document.createElement("button");
+        likeButton.textContent = "Like";
+        dislikebutton.textContent = "Retirer Like";
         if (hasAlreadyLiked(message.id)) {
-            likeButton.textContent = "Déjà liké";
-            likeButton.disabled = true;
+            likeButton.hidden = true;
         }
         else {
-            likeButton.textContent = "Like";
+            likeButton.disabled = false;
+            likeButton.hidden = false;
+        }
+        if (hasAlreadyLiked(message.id)) {
+            dislikebutton.disabled = false;
+            dislikebutton.hidden = false;
+        }
+        else {
+            dislikebutton.hidden = true;
         }
         likeButton.addEventListener("click", async function () {
-            if (hasAlreadyLiked(message.id)) {
-                alert("Tu as déjà liké ce post");
-                return;
-            }
+            likeButton.disabled = true;
             await likePost(message.id);
             saveLikedPost(message.id);
+            resetPosts();
+            const posts = await loadMorePosts();
+            showMessages(posts);
+        });
+        dislikebutton.addEventListener("click", async function () {
+            dislikebutton.disabled = true;
+            await dislikepost(message.id);
+            deletesavedlike(message.id);
             resetPosts();
             const posts = await loadMorePosts();
             showMessages(posts);
@@ -91,6 +113,7 @@ function showMessages(messages) {
         post.appendChild(likes);
         post.appendChild(document.createElement("br"));
         post.appendChild(likeButton);
+        post.appendChild(dislikebutton);
         post.appendChild(document.createElement("br"));
         post.appendChild(commentsButton);
         post.appendChild(commentsDiv);

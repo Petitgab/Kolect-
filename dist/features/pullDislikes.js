@@ -1,6 +1,6 @@
 import { config } from "../env.js";
-async function likePost(messageId) {
-    await fetch(config.API_URL + "message/like", {
+async function dislikepost(messageId) {
+    await fetch(config.API_URL + "message/dislike", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -10,4 +10,4 @@ async function likePost(messageId) {
         })
     });
 }
-export { likePost };
+export { dislikepost };
