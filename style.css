@@ -1,5 +1,6 @@
 body{
-    background-color: azure;
+    background: #2A7B9B;
+    background: linear-gradient(60deg, rgba(42, 123, 155, 1) 0%, rgba(151, 222, 178, 1) 50%, rgba(83, 121, 237, 1) 100%);
 }
 
 .posts-scroll{

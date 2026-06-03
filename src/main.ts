@@ -65,7 +65,7 @@ async function sendPost(): Promise<void> {
     }
 
     await createPost(username, content);
-
+    
     window.location.href= "feed.html"
 }
 
